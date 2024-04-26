@@ -1,0 +1,80 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-1">
+            Select Exporter:
+        </div>
+        <div class="col-2">
+            <select class="form-select" (change)="onSelect($event)" >
+                <option value="undefined">Choose Exporter</option>
+                <option value="exporter01">Exporter 01</option>
+                <option value="exporter02">Exporter 02</option>
+                <option value="exporter03">Exporter 03</option>
+              </select>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-3">
+            <h3>Requests Table</h3>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-auto">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Request Date</th>
+                    <th scope="col">Delivery Address</th>
+                    <th scope="col">email</th>
+                    <th scope="col">phone</th>
+                    <th scope="col">goods</th>
+                    <th scope="col">amount</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let request of bankApprovedRequests">
+                    <td>{{request.id}}</td>
+                    <td>{{request.creationDate}}</td>
+                    <td>{{request.deliveryAddress}}</td>
+                    <td>{{request.email}}</td>
+                    <td>{{request.phone}}</td>
+                    <td>{{request.goods}}</td>
+                    <td>{{request.amount}}</td>
+                    <td><button type="button" (click)="enableExporterEdits(request.id!)" class="btn btn-primary">Validate</button></td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+    </div>
+    <div [hidden]="isHidden" class="row mt-2">
+        <div class="col-3">
+          <h3>Approve</h3>
+            <form #approveRequestForm="ngForm" (ngSubmit)="approveRequestSubmit(approveRequestForm)">
+              <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" class="form-control" id="price" name="price" ngModel  required >
+              </div>
+              <div class="form-group">
+                <label for="comment">Comment</label>
+                <input type="text" class="form-control" id="comment" name="comment" ngModel >
+              </div>
+              <div class="form-group">
+                <label for="estimationDate">Estimation Date</label>
+                <input type="date" class="form-control" id="estimationDate" name="estimationDate" required ngModel >
+              </div>
+              <button class="mt-2" type="submit" [disabled]="approveRequestForm.invalid" class="btn btn-primary">Approve</button>
+            </form>
+        </div>
+        <div class="col-3">
+          <h3>Decline</h3>
+            <form #declineRequestForm="ngForm" (ngSubmit)="declineRequestSubmit(declineRequestForm)">
+              <div class="form-group">
+                <label for="comment">Decline Reason</label>
+                <input type="text" class="form-control" id="comment" name="comment" required ngModel >
+              </div>
+              <button class="mt-2" type="submit" [disabled]="declineRequestForm.invalid" class="btn btn-danger">Decline</button>
+            </form>
+        </div>
+      </div>
+</div>

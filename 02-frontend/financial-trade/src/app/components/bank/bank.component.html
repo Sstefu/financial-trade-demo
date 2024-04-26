@@ -1,0 +1,156 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-1">Select Bank:</div>
+        <div class="col-2">
+            <select class="form-select" (change)="onSelect($event)" >
+                <option value="undefined">Choose Bank</option>
+                <option value="bank01">Bank 01</option>
+                <option value="bank02">Bank 02</option>
+                <option value="bank03">Bank 03</option>
+              </select>
+        </div>
+    </div>
+    <div class="row mt-2">
+          <div class="col-md-auto">
+            <h3>Requests</h3>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Request Date</th>
+                    <th scope="col">Delivery Address</th>
+                    <th scope="col">email</th>
+                    <th scope="col">phone</th>
+                    <th scope="col">goods</th>
+                    <th scope="col">amount</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let request of pendingRequests">
+                    <td>{{request.id}}</td>
+                    <td>{{request.creationDate}}</td>
+                    <td>{{request.deliveryAddress}}</td>
+                    <td>{{request.email}}</td>
+                    <td>{{request.phone}}</td>
+                    <td>{{request.goods}}</td>
+                    <td>{{request.amount}}</td>
+                    <td>
+                      <div class="d-grid gap-2 d-md-block">
+                        <button type="button" (click)="getRequestBankDetails(request.id!,false)" class="btn btn-primary">Aprove/Decline</button>
+                        <button type="button" (click)="getRequestHistory(request.id!,true)" class="btn btn-primary">Show Details</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+        <div class="col-md-auto">
+          <h3>Exporter Declined Requests</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Request Date</th>
+                <th scope="col">Delivery Address</th>
+                <th scope="col">email</th>
+                <th scope="col">phone</th>
+                <th scope="col">goods</th>
+                <th scope="col">amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let request of declinedByExporterRequests">
+                <td>{{request.id}}</td>
+                <td>{{request.creationDate}}</td>
+                <td>{{request.deliveryAddress}}</td>
+                <td>{{request.email}}</td>
+                <td>{{request.phone}}</td>
+                <td>{{request.goods}}</td>
+                <td>{{request.amount}}</td>
+                <td><button type="button" (click)="getRequestExporterDetails(request.id!)" class="btn btn-primary">More</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-auto">
+          <h3>Exporter Details on Requests</h3>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Comments</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{exporterDetails?.id}}</td>
+                <td>{{exporterDetails?.comments}}</td>
+                <td>{{exporterDetails?.status}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+    <div class="row mt-2" [hidden]="isHidden">
+      <div class="col-3">
+        <h3>Approve</h3>
+          <form #approveRequestForm="ngForm" (ngSubmit)="approveRequestSubmit(approveRequestForm)">
+            <div class="form-group">
+              <label for="accountNumber">Account Number</label>
+              <input type="text" class="form-control" id="accountNumber" name="accountNumber" ngModel required >
+            </div>
+            <button class="mt-2" type="submit" [disabled]="approveRequestForm.invalid" class="btn btn-primary">Approve</button>
+          </form>
+      </div>
+      <div class="col-3">
+        <h3>Decline</h3>
+          <form #declineRequestForm="ngForm" (ngSubmit)="declineRequestSubmit(declineRequestForm)">
+            <div class="form-group">
+              <label for="comment">Decline Reason</label>
+              <input type="text" class="form-control" id="comment" name="comment" required ngModel >
+            </div>
+            <button class="mt-2" type="submit" [disabled]="declineRequestForm.invalid" class="btn btn-danger">Decline</button>
+          </form>
+      </div>
+    </div>
+    <div class="row mt-2" [hidden]="isHistoryHidden">
+        <div class="col-md-auto">
+          <h4>Request Status #{{selectedRequest?.id}}: {{selectedRequest?.requestStatus}}</h4>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Status Date</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let history of selectedRequestHistory">
+                <td>{{history?.statusDate}}</td>
+                <td>{{history?.status}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-auto">
+          <h4>Bank Details on Request</h4>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Account Number</th>
+                <th scope="col">Status</th>
+                <th scope="col">Comments</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{bankDetailsDto.accountNumber}}</td>
+                <td>{{bankDetailsDto.status}}</td>
+                <td>{{bankDetailsDto.comments}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        </div>
+    </div>
