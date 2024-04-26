@@ -55,7 +55,7 @@ class BankControllerTest {
     @Test
     void test_get_bank_by_request_id() {
         //given
-        Long requestId = 6L;
+        Long requestId = 1L;
 
         //when
         BankDTO dto = bankController.getBankByRequestId(requestId);
@@ -68,7 +68,7 @@ class BankControllerTest {
     @Test
     void test_update_bank_by_request_id() {
         //given
-        Long requestId = 6L;
+        Long requestId = 1L;
         BankDTO updatedBank = BankDTO.builder()
                 .accountNumber("acountUpdated-2222")
                 .isApproved(true)

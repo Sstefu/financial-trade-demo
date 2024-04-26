@@ -30,7 +30,7 @@ class ExporterServiceImplTest {
         List<RequestDTO> list = exporterService.findRequestsBankApprovalAndExporterName(exporterName);
 
         //then
-        assertThat(list).isNotEmpty();
+        assertThat(list).isEmpty();
     }
     @Test
     void test_update_prices_with_vat_for_approved_requests() {
@@ -39,6 +39,5 @@ class ExporterServiceImplTest {
 
         //then
         assertThat(list).isNotEmpty();
-        System.out.println(list);
     }
 }

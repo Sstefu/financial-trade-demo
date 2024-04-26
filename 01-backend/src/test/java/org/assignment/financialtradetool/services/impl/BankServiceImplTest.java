@@ -41,7 +41,6 @@ class BankServiceImplTest {
     @Test
     void get_requests_based_on_bank_name_and_declined_by_exporter(){
         String name = "bank01";
-//        List<Bank> listOfBanks bankRepository.;
         //when
         List<RequestDTO> list = bankService.findRequestsByBankNameDeclinedByExporter("bank01");
 

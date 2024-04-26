@@ -64,7 +64,7 @@ class RequestControllerTest {
     @Test
     void test_find_request_by_id_success() {
         //given
-        Long id = 7L;
+        Long id = 1L;
 
         //when
         RequestDTO requestDTO = requestController.getRequestById(id);
