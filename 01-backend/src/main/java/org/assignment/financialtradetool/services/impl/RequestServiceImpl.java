@@ -70,10 +70,18 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public Optional<RequestDTO> updateRequestById(Long id, RequestDTO dto) {
         AtomicReference<Optional<RequestDTO>> atomicReference = new AtomicReference<>();
-        //TODO: implement the update on request;
-//        requestRepository.findById(id).ifPresentOrElse(foundRequest -> {
-//        });
-        return Optional.empty();
+        requestRepository.findById(id).ifPresentOrElse(foundRequest -> {
+            foundRequest.setAmount(dto.getAmount());
+            foundRequest.setGoods(dto.getGoods());
+            foundRequest.setRequestStatus(Status.REQUEST_INITIALIZED.toString());
+            atomicReference.set(
+                    Optional.of(
+                            modelMapper.map(requestRepository.save(foundRequest),
+                                    RequestDTO.class)
+                    )
+            );
+        }, () -> atomicReference.set(Optional.empty()));
+        return atomicReference.get();
     }
 
     @Override
