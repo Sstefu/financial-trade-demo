@@ -9,7 +9,7 @@ Prerequisites
 Java 17 or higher,
 AngularCLI v12,
 Maven,
-Docker,
+Docker
 
 ## Running & Instalation
 
