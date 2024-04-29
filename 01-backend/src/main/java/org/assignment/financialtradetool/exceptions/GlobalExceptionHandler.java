@@ -48,11 +48,6 @@ public class GlobalExceptionHandler {
         return createHttpResponse(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.INTERNAL_ERROR);
     }
 
-    @ExceptionHandler(IOException.class)
-    public ResponseEntity<HttpResponse> IOException(IOException exception) {
-        log.error(exception.getMessage());
-        return createHttpResponse(HttpStatus.INTERNAL_SERVER_ERROR, ErrorMessages.INTERNAL_ERROR);
-    }
     private ResponseEntity<HttpResponse> createHttpResponse(HttpStatus status, String message) {
         return new ResponseEntity<>(new HttpResponse(status.value(), status, status.getReasonPhrase(), message), status);
     }
